@@ -3,7 +3,7 @@ const { Client } = require('pg');
 const fs = require('fs');
 const { Router } = require('express'); // Add this line to import Router
 
-const token = "6606195060:AAHKlzqW1phyhyzUiWXlv1B6ap6wDHL4a1I";
+const token = "YOUR_BOT_TOKEN";
 
 const client = new Client({
   user: 'postgres', // Replace with your PostgreSQL username
