@@ -23,13 +23,32 @@ const bot = new Telegraf(token);
 const additionalCommands = [
     { command: 'newcommand1', description: 'Description for New Command 1' },
     { command: 'newcommand2', description: 'Description for New Command 2' },
+    { command: 'newcommand3', description: 'Description for New Command 3' },
     // Add more additional commands here
 ];
 setBotCommands(token, additionalCommands);
 
 bot.command('power', async (ctx) => {
     ctx.reply('More power to you.');
-})
+});
+
+// Handle inline queries
+bot.on('inline_query', (query) => {
+  const results = [
+    {
+      type: 'article',
+      id: '1',
+      title: 'Sample Result',
+      input_message_content: {
+        message_text: 'This is a sample inline result.'
+      }
+    }
+  ];
+
+  bot.answerInlineQuery(query.id, results);
+});
+
+console.log('Bot is running and listening for inline queries.');
   
 // bot.on('text', async (ctx) => {
 //     const text = ctx.message.text;

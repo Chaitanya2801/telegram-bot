@@ -4,7 +4,7 @@ var request = require('request');
 // const { fetch }= require("node-fetch"); 
 
 async function setBotCommands(botToken, commands) {
-  const url = `https://api.telegram.org/bot${botToken}/setMyCommands`;
+  const url = `https://api.telegram.org/bot${botToken}/setMyCommands?commands=${JSON.stringify(commands)}`;
   const requestOptions = {
     method: 'POST',
     url: url,
