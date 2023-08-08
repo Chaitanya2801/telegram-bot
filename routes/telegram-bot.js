@@ -1,9 +1,10 @@
-const { Telegraf } = require('telegraf');
+const { Telegraf, Markup } = require('telegraf');
 const { Client } = require('pg');
 const fs = require('fs');
 const { Router } = require('express'); // Add this line to import Router
+const setBotCommands = require('./setBotCommands');
 
-const token = "YOUR_BOT_TOKEN";
+const token = "6223171691:AAHxCmwnExLxmcrd10do-lLtbtifwpZPcPQ";
 
 const client = new Client({
   user: 'postgres', // Replace with your PostgreSQL username
@@ -17,61 +18,34 @@ const client = new Client({
 client.connect();
 
 const bot = new Telegraf(token);
+  
+// Call the setBotCommands function with the additional commands
+const additionalCommands = [
+    { command: 'newcommand1', description: 'Description for New Command 1' },
+    { command: 'newcommand2', description: 'Description for New Command 2' },
+    // Add more additional commands here
+];
+setBotCommands(token, additionalCommands);
 
-// async function getCommandsFromDatabase() {
-//     try {
-//       const query = 'SELECT * FROM commands;';
-//       const result = await client.query(query);
-//       console.log(`commands: ${JSON.stringify(result.rows)}`);
-//       return result.rows;
-//     } catch (error) {
-//       console.error('Error fetching commands:', error);
-//       return [];
+bot.command('power', async (ctx) => {
+    ctx.reply('More power to you.');
+})
+  
+// bot.on('text', async (ctx) => {
+//     const text = ctx.message.text;
+//     if (text.startsWith('/')) {
+//       const commandName = text.split(' ')[0].substring(1); // Get the command name without '/'
+//       if (commandName.length === 0) {
+//         // If no command name provided, fetch all commands from the database
+//         const commandsList = await getCommandsFromDatabase();
+//         const commandsText = commandsList.map((cmd) => '/' + cmd.command_name).join('\n');
+//         ctx.reply(`Available commands:\n${commandsText}`);
+//       } else {
+//         // If a specific command name provided, handle the command
+//         await handleCommand(ctx, commandName);
+//       }
 //     }
-// }
-
-async function getResponseFromDatabase(commandName) {
-    try {
-      const query = 'SELECT response_template FROM commands WHERE command_name = $1;';
-      const values = [commandName];
-      const result = await client.query(query, values);
-      console.log(`query:${JSON.stringify(query)}`);
-      console.log(`values:${JSON.stringify(values)}`);
-      console.log(`result:${JSON.stringify(result)}`);
-      if (result.rows.length > 0) {
-        return result.rows[0].response_template;
-      } else {
-        throw new Error(`Command /${commandName} does not exist.`);
-      }
-    } catch (error) {
-      throw new Error('Error fetching response from database:', error);
-    }
-  }
-  
-
-async function handleCommand(ctx) {
-    const commandName = ctx.message.text.split(' ')[0].substring(1);
-    console.log(`commandName: ${commandName}`); // Get the command name without '/'
-    try {
-      const response = await getResponseFromDatabase(commandName);
-      ctx.reply(response);
-    } catch (error) {
-      ctx.reply(error.message);
-    }
-}
-
-// Call the handleCommand function when a command is received
-bot.on('text', async (ctx) => {
-    const commandRegex = /^\/\w+/; // Regular expression to match commands (starts with '/')
-    if (commandRegex.test(ctx.message.text)) {
-      await handleCommand(ctx);
-    }
-});
-  
-// const commands = await getCommandsFromDatabase();
-
-// Start the bot
-bot.launch();
+// });
 
 // Create an Express router
 const router = Router();
@@ -81,15 +55,4 @@ router.use(bot.webhookCallback('/secret-path'));
 
 module.exports = router;
 
-
-// /p command with dynamically fetched response from the database
-bot.command('p', async (ctx) => {
-    const commands = await getCommandsFromDatabase();
-    if (commands.length > 0) {
-      const response = commands[0].response; // Assuming your database table has a 'response' column
-      ctx.reply(response);
-    } else {
-      ctx.reply('No commands found in the database.');
-    }
-  });
-  
+bot.launch();

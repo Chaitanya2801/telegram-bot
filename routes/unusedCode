@@ -1,0 +1,117 @@
+// async function getCommandsFromDatabase() {
+//     try {
+//       const query = 'SELECT command_name FROM commands;';
+//       const result = await client.query(query);
+//       console.log(`commands: ${JSON.stringify(result.rows)}`);
+//       return result.rows;
+//     } catch (error) {
+//       console.error('Error fetching commands:', error);
+//       return [];
+//     }
+// }
+
+// async function getResponseFromDatabase(commandName) {
+//     try {
+//       const query = 'SELECT response_template FROM commands WHERE command_name = $1;';
+//       const values = [commandName];
+//       const result = await client.query(query, values);
+//       console.log(`query:${JSON.stringify(query)}`);
+//       console.log(`values:${JSON.stringify(values)}`);
+//       console.log(`result:${JSON.stringify(result)}`);
+//       if (result.rows.length > 0) {
+//         return result.rows[0].response_template;
+//       } else {
+//         throw new Error(`Command /${commandName} does not exist.`);
+//       }
+//     } catch (error) {
+//       throw new Error('Error fetching response from database:', error);
+//     }
+// }
+
+// async function handleCommand(ctx) {
+//     const commandName = ctx.message.text.split(' ')[0].substring(1);
+//     console.log(`commandName: ${commandName}`); // Get the command name without '/'
+  
+//     if (commandName === '') {
+//       // If the user typed "/", show a list of available commands
+//       try {
+//         const commands = await getCommandsFromDatabase();
+//         if (commands.length > 0) {
+//           const commandList = commands.map((command) => `/${command.command_name}`).join('\n');
+//           ctx.reply(`Available commands:\n${commandList}`);
+//         } else {
+//           ctx.reply('No commands found in the database.');
+//         }
+//       } catch (error) {
+//         ctx.reply('Error fetching commands from the database.');
+//       }
+//     } else {
+//       // If the user typed a specific command, handle it as before
+//       try {
+//         const response = await getResponseFromDatabase(commandName);
+//         ctx.reply(response);
+//       } catch (error) {
+//         ctx.reply(error.message);
+//       }
+//     }
+// }
+
+// // Call the handleCommand function when a command is received
+// bot.on('text', async (ctx) => {
+//     const commandRegex = /^\/\w+/; // Regular expression to match commands (starts with '/')
+//     console.log(`commandRegex: ${commandRegex.test(ctx.message.text)}`);
+//     if (commandRegex.test(ctx.message.text)) {
+//       await handleCommand(ctx);
+//     }
+// });
+// Call the handleCommand function when a command is received
+
+// // Handle the '/' symbol before entering the command
+// bot.hears('/', async (ctx) => {
+//     try {
+//       console.log(`Chaitanyas`);
+//       const commands = await getCommandsFromDatabase();
+//       console.log(`Chaitanyas2`);
+//       if (commands.length > 0) {
+//         console.log(`Chaitanyas3`);
+//         const commandsText = commands.join('\n');
+//         ctx.reply(`Available commands:\n${commandsText}`);
+//       } else {
+//         ctx.reply('No commands found in the database.');
+//       }
+//     } catch (error) {
+//       ctx.reply('Error fetching commands from the database.');
+//     }
+// });
+
+// // Handle inline queries
+// bot.on('inline_query', async (ctx) => {
+//     console.log(`Chaitanya4`);
+//     const query = ctx.inlineQuery.query; // Get the query string from the inline query
+//     console.log(`Chaitanya5:${JSOn.stringify(query)}`);
+  
+//     // Generate results based on the query
+//     const results = [
+//       {
+//         type: 'article',
+//         id: '1',
+//         title: 'Result 1',
+//         description: 'This is the first result',
+//         input_message_content: {
+//           message_text: 'You selected Result 1',
+//         },
+//       },
+//       {
+//         type: 'article',
+//         id: '2',
+//         title: 'Result 2',
+//         description: 'This is the second result',
+//         input_message_content: {
+//           message_text: 'You selected Result 2',
+//         },
+//       },
+//     ];
+  
+//     // Send the results back to the user
+//     await ctx.answerInlineQuery(results);
+// });
