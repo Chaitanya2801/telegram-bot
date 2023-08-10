@@ -115,3 +115,88 @@
 //     // Send the results back to the user
 //     await ctx.answerInlineQuery(results);
 // });
+
+//   console.log(`ctx: ${JSON.stringify(ctx)}`);
+//   const params = ctx.startPayload; // Extract the start parameter
+//   // Do something with the start parameter
+//   if (params) {
+//       ctx.reply(`Welcome to the bot! Start parameter: ${params}`);
+//   } else {
+//       ctx.reply('Welcome to the bot!');
+//   }
+// });
+
+// bot.start(async (ctx) => {
+    //   const params = ctx.startPayload; // Extract the start parameter
+    //   // Do something with the start parameter
+    //   const parsedParams = new URLSearchParams(params);
+    //   const chatId = ctx.chat.id;
+    //   const userId = ctx.from.user
+    //   const groupId = parsedParams.get('group_id');
+    //   console.log(`chatId: ${groupId}`);
+    //   if (params) {
+    //       ctx.reply(`Welcome to the bot! Start parameter: ${params}`);
+    //   } else {
+    //       ctx.reply('Welcome to the bot!');
+    //   }
+    // });
+
+    // bot.on("callbackQuery", async (query) => {
+//   const data = query.data;
+//   const userId = data.userId;
+//   const chatId = data.chatId;
+
+//   console.log(`userId: ${userId}`);
+//   console.log(`chatId: ${chatId}`);
+//   // Add the user to the database.
+//   await bot.sendMessage(chatId, `User ${userId} added to the database.`);
+// });
+
+// // Call the setBotCommands function with the additional commands
+// const additionalCommands = [
+//   {
+//     command: 'start',
+//     description: 'Start the bot',
+//     parameters: [
+//       { label: 'param1', description: 'Description for param1' },
+//       // Add more parameters if needed
+//     ],
+//     scope: { type: 'default' },
+//   },
+//   {
+//     command: 'help',
+//     description: 'How can I Help you!',
+//     parameters: [
+//       { label: 'param2', description: 'Description for param2' },
+//       // Add more parameters if needed
+//     ],
+//     scope: { type: 'chat', chat_id: '-1001894125859' },
+//   },
+//   // Add more commands here
+// ];
+
+// console.log(`commands: ${JSON.stringify(additionalCommands)}`);
+
+// // await bot.setBotCommands(additionalCommands, scope);
+
+// setBotCommands(token, additionalCommands);
+
+// const commandScope = {type: ""};
+
+// let generalCommands = [
+//     {command: 'price', description: 'Description for New Command 4'},
+//     {command: 'gasprice', description: 'Description for New Command 5'},
+// ];
+// // setBotCommands(token, additionalCommands, commandScope);
+// bot.telegram.setMyCommands(generalCommands);
+
+// let groupSpecificCommands = [
+//     {command: 'tvl', description: 'Description for New Command 4'},
+// ];
+// const commandScope = {type: "chat", chat_id: -947544388}; // DappLookerWorld2
+
+// console.log(`groupSpecificCommands: ${JSON.stringify(groupSpecificCommands)}`);
+// bot.telegram.setMyCommands(groupSpecificCommands, {scope: commandScope});
+
+// console.log(`generalCommands: ${JSON.stringify(generalCommands)}`);
+    
